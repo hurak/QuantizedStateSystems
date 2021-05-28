@@ -1,11 +1,16 @@
 """
-    t,x = qss1(f,x₀,tspan,Δq)
+    t,x,q = qss1(f,x₀,tspan,Δq)
 
 Solve the initial value problem (IVP) for a given first-order ODE using the method of hysteretically quantized state system (QSS) or order 1.
 
 Consider a single first-order explicit ODEs (aka state equation) `ẋ = f(x)`, with the initial value `x₀` specified at an initial time `t₀`. Solution is to be found on a time span `tspan=(t₀,t₁)`. The only parameter is the quantum `Δq`. The hysteresis band has the same width as the quantum.
 
-The outputs are two arrays of arrays: the 1D array `t` of 1D arrays (vectors) of times and the correspoding 1D array `x` of the 1D arrays corresponding to the evolution of individual quantized state variables.
+The outputs are three arrays of arrays:
+- 1D array `t` of 1D arrays (vectors) of times,
+- 1D array `x` of the 1D arrays corresponding to the evolution of individual state variables,
+- 1D array `q` of the 1D arrays corresponding to the evolution of individual quantized state variables.
+
+Note that for a first-order system with no external events the `x` and `q` arrays are identical up to the initial values (`x₀` before and after quantization), but we decided to keep track of both separately just in case we extend the functionality for handling external events (such as step inputs). 
 
 # References
 
