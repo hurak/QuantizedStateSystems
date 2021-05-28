@@ -2,9 +2,9 @@
 CurrentModule = QuantizedStateSystems
 ```
 
-# QuantizedStateSystems
+# QuantizedStateSystems.jl
 
-Documentation for [QuantizedStateSystems](https://github.com/hurak/QuantizedStateSystems.jl).
+Documentation for [QuantizedStateSystems.jl](https://github.com/hurak/QuantizedStateSystems.jl).
 
 ```@index
 ```
