@@ -24,12 +24,12 @@ end
         tspan = (0.0,5.0)
         tuarray = [1.76]
         uarray = [10.0]
-        Δq = 2.0
+        Δq = 0.01
         heaviside(t,τ) = t>=τ ? 1.0 : 0.0
         xtrue(t) = x₀*exp(-t) + 10.0*(heaviside(t,1.76)*(1.0-exp(-t+1.76)))
         (txarray,xarray,tqarray,qarray) = qss1(f,x₀,tspan,Δq,tuarray,uarray)
         xtruearray = xtrue.(txarray)
         relerror = (xarray-xtruearray)./xtruearray
-        norm(relerror)<0.01
+        norm(relerror)<0.05
     end
 end

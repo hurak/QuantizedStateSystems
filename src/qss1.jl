@@ -20,7 +20,7 @@ julia> f(x) = -1.0*x;
 julia> x₀ = 10.0;
 julia> tspan = (0.0,1.0);
 julia> Δq = 0.1;
-julia> tarray,xarray,qarray = qss1(f,x₀,tspan,Δq);
+julia> txarray,xarray,tqarray,qarray = qss1(f,x₀,tspan,Δq);
 ```
 """
 function qss1(f,x₀,tspan,Δq)
