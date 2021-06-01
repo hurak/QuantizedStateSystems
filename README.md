@@ -3,7 +3,7 @@
 <!--[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://hurak.github.io/QuantizedStateSystems.jl/stable)-->
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://hurak.github.io/QuantizedStateSystems.jl/dev)
 [![Build Status](https://github.com/hurak/QuantizedStateSystems.jl/workflows/CI/badge.svg)](https://github.com/hurak/QuantizedStateSystems.jl/actions)
-[![Coverage](https://codecov.io/gh/hurak/QuantizedStateSystems.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/hurak/QuantizedStateSystems.jl)
+[![Coverage](https://codecov.io/gh/hurak/QuantizedStateSystems.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/hurak/QuantizedStateSystems.jl)
 
 A Julia package for solving initial value problems (IVP) for ordinary differential equations (ODE) based on discretization (quantization) of the state space (in contrast to the discretization/quantization of the time axis used in common numerical methods for solving ODEs). An approach (planned to be) implemented in this package is called [Quantized State System (QSS)](https://en.wikipedia.org/wiki/Quantized_state_systems_method) and has been developed and promoted in a series of papers by [Ernesto Kofman](https://scholar.google.com/citations?user=WdXDZEkAAAAJ&hl=en) and his colleagues, starting with the paper
 
