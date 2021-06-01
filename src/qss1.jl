@@ -49,7 +49,7 @@
 # end
 
 """
-txarray,xarray,tqarray,qarray = qss1(f,x₀,tspan,Δq,tuarray,uarray)
+    txarray,xarray,tqarray,qarray = qss1(f,x₀,tspan,Δq,tuarray,uarray)
 
 Solve the initial value problem (IVP) for a given first-order ODE with inputs using the method of hysteretically quantized state system (QSS) or order 1.
 
