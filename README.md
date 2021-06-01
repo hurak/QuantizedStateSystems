@@ -19,7 +19,7 @@ In addition, chapters dedicated to QSS are also in the following monographs
 
 An implementation of the method has already appeared in [PowerDEVS](https://sourceforge.net/projects/powerdevs/)
 
-4. F. Bergero and E. Kofman, “PowerDEVS: a tool for hybrid system modeling and real-time simulation,” SIMULATION, vol. 87, no. 1–2, pp. 113–132, Jan. 2011, doi: 10.1177/0037549710368029.
+- F. Bergero and E. Kofman, “PowerDEVS: a tool for hybrid system modeling and real-time simulation,” SIMULATION, vol. 87, no. 1–2, pp. 113–132, Jan. 2011, doi: 10.1177/0037549710368029.
 
 The primary original motivation for the development of this package was just to get familiar with the algorithm(s) based on discretization/quantization of state variables, as they are not quite frequently described/discussed elsewhere. It remains to be seen if the package evolves to any reasonable maturity and if it can be of any other use for any other user.
 
