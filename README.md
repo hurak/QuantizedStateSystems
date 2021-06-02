@@ -5,7 +5,9 @@
 [![Build Status](https://github.com/hurak/QuantizedStateSystems.jl/workflows/CI/badge.svg)](https://github.com/hurak/QuantizedStateSystems.jl/actions)
 [![Coverage](https://codecov.io/gh/hurak/QuantizedStateSystems.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/hurak/QuantizedStateSystems.jl)
 
-A Julia package for solving initial value problems (IVP) for ordinary differential equations (ODE) based on discretization (quantization) of the state space (in contrast to the discretization/quantization of the time axis used in common numerical methods for solving ODEs). An approach (planned to be) implemented in this package is called [Quantized State System (QSS)](https://en.wikipedia.org/wiki/Quantized_state_systems_method) and has been developed and promoted in a series of papers by [Ernesto Kofman](https://scholar.google.com/citations?user=WdXDZEkAAAAJ&hl=en) and his colleagues, starting with the paper
+An (experimental) Julia package for solving initial value problems (IVP) for ordinary differential equations (ODE) using **discretization (quantization) of the state space** (in contrast to the discretization/quantization of the time axis used in common numerical methods for solving ODEs).
+
+An approach (planned to be) implemented in this package is called [Quantized State System (QSS)](https://en.wikipedia.org/wiki/Quantized_state_systems_method) and has been developed and promoted in a series of papers by [Ernesto Kofman](https://scholar.google.com/citations?user=WdXDZEkAAAAJ&hl=en) and his colleagues, starting with the paper
 
 - E. Kofman and S. Junco, “Quantized-state systems: a DEVS Approach for continuous system simulation,” Trans. Soc. Comput. Simul. Int., vol. 18, no. 3, pp. 123–132, Sep. 2001.
 
