@@ -5,7 +5,7 @@ using Test
 @testset "QSS1 for scalar systems with no input" begin
     @test begin
         a = -1.0
-        f = (x,u) -> a*x
+        f = (x,u,t) -> a*x
         x₀ = 10.0
         tspan = (0.0,1.0)
         Δq = 0.01
@@ -19,7 +19,7 @@ end
 
 @testset "QSS1 for scalar systems with (control) inputs" begin
     @test begin
-        f = (x,u) -> -1.0*x + u
+        f = (x,u,t) -> -1.0*x + u
         x₀ = 10.0
         tspan = (0.0,5.0)
         tuarray = [1.76]

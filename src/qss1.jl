@@ -38,7 +38,7 @@ function qss1(f,x₀,tspan,Δq,tuarray,uarray)
     tqarray = [t,]              # Initializing an array of times for the quantized state variable.
     qarray = [q,]               # Initializing an array of (samples of) the quant. state variable.
     while t < t₁
-        k = f(q,u)              # Derivative corresponding to the quantized state.
+        k = f(q,u,t)            # Derivative corresponding to the quantized state.
         Δt = abs(Δq/k)          # Time increment based only on f and not u.
         if isempty(tuarray) && t+Δt > t₁ # Predicted crossing of the quant. level beyond time span.
             Δt = t₁-t           # The time from now till the end.
