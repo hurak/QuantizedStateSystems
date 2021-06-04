@@ -10,13 +10,13 @@ Find a solution on the time interval ``[0,2]`` for the first-order system given 
 
 with the initial condition ``x(0) = 5``.
 
-The model is given by the right-hand side of the state equation and the initial state
+We enter the model, that is, the function on the right-hand side of the state equation and the initial state in Julia as simply as
 
 ```julia
 f = (x,u,t) -> (x-2t*x^2)/(1+t)
 x₀ = 5.0
 ```
-The time interval
+The time interval is entered as a tuple of the initial and final time
 
 ```julia
 tspan = (0.0,2.0)
@@ -31,10 +31,10 @@ The only parameter for the method is the quantum `Δq`
 Let's call the solver
 
 ```julia
-(txarray,xarray,tqarray,qarray) = qss1(g,x₀,tspan,Δq,tuarray,uarray)
+(txarray,xarray,tqarray,qarray) = qss1(f,x₀,tspan,Δq,tuarray,uarray)
 ```
 
-Before we plot the solution, we take the advantage of availability of a formula for the solution:
+Before we plot the solution, we take the advantage of availability of a formula for the exact solution:
 
 ```math
 x(t) = \frac{t+1}{t^2+1/x(0)}.
