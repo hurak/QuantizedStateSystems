@@ -23,7 +23,7 @@ Note that for a first-order system with no external events the `x` and `q` array
 """
 function qss1(f,x₀,tspan,Δq,tuarray,uarray)
     (t₀,t₁) = tspan             # Initial and final times for the simulation.
-    if tuarray[1]==t₀           # Setting the initial value of the input:
+    if ~isempty(tuarray) && tuarray[1]==t₀  # Setting the initial value of the input:
         u = uarray[1]           # - either to the first value of the (piecewise) input,
         popfirst!(uarray)
         popfirst!(tuarray)
