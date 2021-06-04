@@ -2,9 +2,53 @@
 
 ## First-order system without an input
 
-Find a solution on a time interval ``[t_0,t_1]`` for the first-order system given by the equation ``\dot x(t) = \frac{x(t)-2tx^2(t)}{1+t}`` with the initial condition ``x(0) = 5``.
+Find a solution on the time interval ``[0,2]`` for the first-order system given by the equation
 
-In this particular case we can take advantage of the knowing the exact solution: ``x(t) = \frac{t+1}{t^2+1/x(0)}``.
+```math
+\dot x(t) = \frac{x(t)-2tx^2(t)}{1+t}
+```
+
+with the initial condition ``x(0) = 5``.
+
+We are going to solve the problem numerically, but subsequently we are going to compare our solution against the known exact solution give by
+
+```math
+x(t) = \frac{t+1}{t^2+1/x(0)}.
+```
+The model is given by the right-hand side of the state equation and the initial state
+
+```julia
+f = (x,u,t) -> (x-2t*x^2)/(1+t)
+x₀ = 5.0
+```
+The time interval
+
+```julia
+tspan = (0.0,2.0)
+```
+
+The only parameter for the method is the quantum `Δq`
+
+```julia
+Δq = 1.0
+```
+
+Let's call the solver
+
+```julia
+(txarray,xarray,tqarray,qarray) = qss1(g,x₀,tspan,Δq,tuarray,uarray)
+```
+
+Lets plot the numerical solution together with the exact solution.
+
+```julia
+using Plots
+x(t) = (t+1)/(t^2+1/x₀)
+t = range(tspan[1],tspan[2],length=500)
+plot(t,x.(t),linewidth=3, xlabel="Time", ylabel="State", label="Analytical", legend=:topright)
+plot!(tqarray,qarray, linewidth=3, seriestype = :steppost, label="QSS1 quantized")
+plot!(txarray,xarray, linewidth=3, marker=:dot, label="QSS1")
+```
 
 ![Simulation outcomes](figures/sim_qss1_without_input.png)
 
@@ -42,7 +86,7 @@ Now it is time to call the solver
 ```julia
 (txarray,xarray,tqarray,qarray) = qss1(f,x₀,tspan,Δq,tuarray,uarray)
 ```
-Before we plot the solution, we may appreciate that in the linear case we can get the exact solution using a formular, which makes it possible to see how accurate the QSS1 method is.
+Before we plot the solution, we may appreciate that in the linear case we can get the exact solution using a formula. This will make it possible to see how accurate the QSS1 method is.
 
 ```julia
 heaviside(t,τ) = t>=τ ? 1.0 : 0.0
