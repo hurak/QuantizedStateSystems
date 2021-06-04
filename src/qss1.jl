@@ -1,67 +1,25 @@
-# """
-#     txarray,xarray,tqarray,qarray = qss1(f,x₀,tspan,Δq)
-#
-# Solve the initial value problem (IVP) for a given first-order ODE using the method of hysteretically quantized state system (QSS) or order 1.
-#
-# Consider a single first-order explicit ODEs (aka state equation) `ẋ = f(x)`, with the initial value `x₀` specified at an initial time `t₀`. Solution is to be found on a time span `tspan=(t₀,t₁)`. The only parameter for the method is the quantum `Δq`. The hysteresis band has the same width as the quantum.
-#
-# The outputs are four arrays:
-# - a 1D array (aka vector) `t` of times when the value of `x` is given,
-# - a vector of values of `x` corresponding to the times,
-# - 1D array `x` of the 1D arrays corresponding to the evolution of the state variable,
-# - 1D array `q` of the 1D arrays corresponding to the evolution of the quantized state variable.
-#
-# Note that for a first-order system with no external events the `x` and `q` arrays are identical up to the initial values (`x₀` before and after quantization), but we decided to keep track of both separately just in case we extend the functionality for handling external events (such as step inputs).
-#
-# # Example
-#
-# ```julia
-# julia> f(x) = -1.0*x;
-# julia> x₀ = 10.0;
-# julia> tspan = (0.0,1.0);
-# julia> Δq = 0.1;
-# julia> txarray,xarray,tqarray,qarray = qss1(f,x₀,tspan,Δq);
-# ```
-# """
-# function qss1(f,x₀,tspan,Δq)
-#     (t₀,t₁) = tspan             # Initial and final times.
-#     tarray = [t₀,]              # Initializing an array of times. The length not known apriori.
-#     xarray = [x₀,]              # Initializing an array of state variables.
-#     t = t₀                      # Initializing the current time.
-#     x = x₀
-#     q = Δq*floor(x₀/Δq)         # Quantized initial state.
-#     qarray = [q,]               # Initializing an array of quantized state variables.
-#     while t <= t₁
-#         k = f(q)                # Derivative corresponding to the quantized state.
-#         Δt = abs(Δq/k)          # Time increment.
-#         t += Δt                 # Next time.
-#         q += sign(k)*Δq         # Next quantized state.
-#         x = q                   # Somewhat redundant in the no-input case but still...
-#         push!(tarray,t)         # Append the time to the array of times.
-#         push!(xarray,x)         # Append the quantized state to the array of (samples of) states.
-#                                 # In the scalar case with no external events, the quantized states
-#                                 # coincide with the true states at the transition times.
-#         push!(qarray,q)         # The same for the quantized states up to the first value.
-#                                 # In presence of external events (functionality possibly added
-#                                 # later) they could differ.
-#     end
-#     return (tarray,xarray,qarray)
-# end
-
 """
     txarray,xarray,tqarray,qarray = qss1(f,x₀,tspan,Δq,tuarray,uarray)
 
 Solve the initial value problem (IVP) for a given first-order ODE with inputs using the method of hysteretically quantized state system (QSS) or order 1.
 
-Consider a single first-order explicit ODEs (aka state equation) `ẋ = f(x,u)`, with the initial value `x₀` specified at an initial time `t₀` and a piecewise (control) input `u` given by a pair of vectors `tuarray` and `uarray`of times and values. Solution is to be found on a time span `tspan=(t₀,t₁)`. The only parameter for the method is the quantum `Δq`. The hysteresis band has the same width as the quantum.
+For a single first-order explicit ODEs (aka state equation) `ẋ = f(x,u)`, with the initial value `x₀` specified at an initial time `t₀`, and possibly a piecewise (control) input `u` given by a pair of vectors `tuarray` and `uarray`of times and values, find the solution on the time span `tspan=(t₀,t₁)`. The only parameter for the method is the quantum `Δq`, while the hysteresis band has the same width as the quantum.
 
-The outputs are four arrays:
-- a 1D array (aka vector) `t` of times when the value of `x` is given,
-- a vector of values of `x` corresponding to the times,
-- 1D array `x` of the 1D arrays corresponding to the evolution of the state variable,
-- 1D array `q` of the 1D arrays corresponding to the evolution of the quantized state variable.
+# Arguments
+- `f`: function defining the right hand side of the differential equation.
+- `x₀`: initial condition.
+- `tspan`: time span.
+- `Δq`: quantum.
+- `tuarray`: array of times at which the the input changes to a new constant value.
+- `uarray`: array of values of the piecewise constant input.
 
-Note that for a first-order system with no external events the `x` and `q` arrays are identical up to the initial values (`x₀` before and after quantization), but we decided to keep track of both separately just in case we extend the functionality for handling external events (such as step inputs).
+# Outputs
+- `txarray`: a vector of times when the value of `x` is computed, between these values it evolves linearly.
+- `xarray`: a vector of values of `x` corresponding to the times.
+- `tqarray`: a vector of times when the value of piecewise constant `q` changes.
+- `qarray`: a vector of values of the piecewise constant quantized `q`.
+
+Note that for a first-order system with no external events the `x` and `q` arrays are identical up to the initial values (`x₀` before vs. after quantization).
 """
 function qss1(f,x₀,tspan,Δq,tuarray,uarray)
     (t₀,t₁) = tspan             # Initial and final times for the simulation.
@@ -79,10 +37,16 @@ function qss1(f,x₀,tspan,Δq,tuarray,uarray)
     q = Δq*floor(x₀/Δq)         # Setting the quantized initial state.
     tqarray = [t,]              # Initializing an array of times for the quantized state variable.
     qarray = [q,]               # Initializing an array of (samples of) the quant. state variable.
-    while t <= t₁
+    while t < t₁
         k = f(q,u)              # Derivative corresponding to the quantized state.
         Δt = abs(Δq/k)          # Time increment based only on f and not u.
-        if (~isempty(tuarray) && t+Δt <= tuarray[1]) || isempty(tuarray)   # If the next crossing of quant. level is before the change of u.
+        if isempty(tuarray) && t+Δt > t₁ # Predicted crossing of the quant. level beyond time span.
+            Δt = t₁-t           # The time from now till the end.
+            t = t₁              # The last time x is evaluated is at the very end of the time span.
+            x += k*Δt           # The state x updated at the very end of the timespan.
+            push!(txarray,t)    # Store the time when x experiences a change in derivative and
+            push!(xarray,x)     # the actual value of x when that happens. No change to q and its t.
+        elseif (~isempty(tuarray) && t+Δt < tuarray[1]) || (isempty(tuarray) && t+Δt <= t₁)   # If the next crossing of quant. level is before the change of u or before the end.
             t += Δt             # Set the next time.
             q += sign(k)*Δq     # Set the next quantized state.
             x = q               # State variable x is following q at the moment q changes.
@@ -90,7 +54,7 @@ function qss1(f,x₀,tspan,Δq,tuarray,uarray)
             push!(xarray,q)     # Append the quantized state to the array of (samples of) states.
             push!(tqarray,t)
             push!(qarray,q)     # The same for the quantized states (up to the first value).
-        elseif ~isempty(tuarray)# If the change in u arrives before x crosses the quant. level.
+        elseif ~isempty(tuarray) && t+Δt >= tuarray[1] # If the change in u arrives before x crosses the quant. level.
             Δt = tuarray[1]-t   # The time from now till the moment u changes.
             t = tuarray[1]      # The moment when u changes.
             u = uarray[1]       # The new value of u.

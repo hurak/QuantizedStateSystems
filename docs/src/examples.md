@@ -2,7 +2,9 @@
 
 ## First-order system without an input
 
-[TBD]
+Find a solution on a time interval ``[t_0,t_1]`` for the first-order system given by the equation ``\dot x(t) = \frac{x(t)-2tx^2(t)}{1+t}`` with the initial condition ``x(0) = 5``.
+
+In this particular case we can take advantage of the knowing the exact solution: ``x(t) = \frac{t+1}{t^2+1/x(0)}``. 
 
 ## First-order system with an input
 
