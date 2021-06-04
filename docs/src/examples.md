@@ -4,7 +4,9 @@
 
 Find a solution on a time interval ``[t_0,t_1]`` for the first-order system given by the equation ``\dot x(t) = \frac{x(t)-2tx^2(t)}{1+t}`` with the initial condition ``x(0) = 5``.
 
-In this particular case we can take advantage of the knowing the exact solution: ``x(t) = \frac{t+1}{t^2+1/x(0)}``. 
+In this particular case we can take advantage of the knowing the exact solution: ``x(t) = \frac{t+1}{t^2+1/x(0)}``.
+
+![Simulation outcomes](figures/sim_qss1_without_input.png)
 
 ## First-order system with an input
 
@@ -60,6 +62,3 @@ plot(p1,p2,layout=(2,1))
 ```
 
 ![Simulation outcomes](figures/sim_qss1_with_input.png)
-
-!!! note
-    Apparently the last output is computed well before the end of the `timespan`. Will be fixed.
