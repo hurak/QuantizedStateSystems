@@ -10,11 +10,6 @@ Find a solution on the time interval ``[0,2]`` for the first-order system given 
 
 with the initial condition ``x(0) = 5``.
 
-We are going to solve the problem numerically, but subsequently we are going to compare our solution against the known exact solution give by
-
-```math
-x(t) = \frac{t+1}{t^2+1/x(0)}.
-```
 The model is given by the right-hand side of the state equation and the initial state
 
 ```julia
@@ -39,7 +34,13 @@ Let's call the solver
 (txarray,xarray,tqarray,qarray) = qss1(g,x₀,tspan,Δq,tuarray,uarray)
 ```
 
-Lets plot the numerical solution together with the exact solution.
+Before we plot the solution, we take the advantage of availability of a formula for the solution:
+
+```math
+x(t) = \frac{t+1}{t^2+1/x(0)}.
+```
+
+We plot our (approximating) numerical solution `x` and its quantized counterpart `q`  together with the exact solution.
 
 ```julia
 using Plots
