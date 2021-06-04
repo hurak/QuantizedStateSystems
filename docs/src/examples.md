@@ -22,7 +22,7 @@ The time interval is entered as a tuple of the initial and final time
 tspan = (0.0,2.0)
 ```
 
-The only parameter for the method is the quantum `Δq`
+The only parameter for the method is the quantum `Δq`. We intentionally set rather large value to see its impact in the simulation outcome
 
 ```julia
 Δq = 1.0
@@ -75,7 +75,7 @@ tuarray = [1.76]
 uarray = [10.0]
 ```
 
-The only parameter for the method is the quantum `Δq`. We choose
+The only parameter for the method is the quantum `Δq`. We intentionally set rather large value to see its impact in the simulation outcome
 
 ```julia
 Δq = 2.0
