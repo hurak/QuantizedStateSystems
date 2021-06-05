@@ -75,7 +75,7 @@ tuarray = [1.76]
 uarray = [10.0]
 ```
 
-The only parameter for the method is the quantum `Δq`. We intentionally set rather large value to see its impact in the simulation outcome
+The only parameter for the method is the quantum `Δq`
 
 ```julia
 Δq = 2.0
