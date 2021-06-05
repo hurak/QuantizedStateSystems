@@ -95,7 +95,7 @@ x(t) = x₀*exp(-t) + 10.0*(heaviside(t,1.76)*(1.0-exp(-t+1.76)))
 t = range(tspan[1],tspan[2],length=500)
 ```
 
-We can now plot the solution. We will plot not only the state `x` trajectory for the QSS1 method and the "exact" trajectory obtained from the convolution formula, but we will also plot the quantized state `q`. We will also show the (control) input `u`.
+We can now plot the solution. We plot not only the state `x` trajectory for the QSS1 method and the "exact" trajectory obtained from the convolution formula, but we also plot the quantized state `q`. In a separate subplot we also show the (control) input `u`.
 
 ```julia
 using Plots
